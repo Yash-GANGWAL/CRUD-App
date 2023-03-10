@@ -101,7 +101,7 @@
 
         newLi.appendChild(document.createTextNode(currentInput));
         list.appendChild(newLi);
-        newLi.className = "list-group-item d-flex justify-content-between";
+        newLi.className = "list-group-item d-flex flex-wrap overflow-hidden justify-content-between";
         newLi.innerHTML = `<h3 class="flex-grow-1">${currentInput}</h3>
         <button class="btn btn-warning mx-5" onclick="editChapter(this)">
           EDIT
