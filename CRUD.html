@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+      integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn"
+      crossorigin="anonymous"
+    />
+    
+    <title>CRUD APP</title>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#">Navbar</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link active" href="#"
+              >Home <span class="sr-only">(current)</span></a
+            >
+            <a class="nav-link" href="#">Features</a>
+            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link disabled">Disabled</a>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container mt-5 col-5">
+        <div class="input-group mb-3">
+          <input
+            id="userInput"
+            type="text"
+            class="form-control"
+            placeholder="Chapter name"
+            aria-label="Recipient's username"
+            aria-describedby="button-addon2"
+          />
+
+          <div class="input-group-append">
+            <button
+              id="add_btn"
+              class="btn btn-outline-secondary"
+              type="button"
+            >
+              ADD
+            </button>
+          </div>
+        </div>
+
+        <ul id="parentlist" class="list-group">
+          <li class="list-group-item d-flex justify-content-between">
+            <h3 class="flex-grow-1">Chapter 1</h3>
+            <button class="btn btn-warning mx-5" onclick="editChapter(this)">
+              EDIT
+            </button>
+
+            <button class="btn btn-danger" onclick="removeChapter(this)">
+              REMOVE
+            </button>
+          </li>
+        </ul>
+      </div>
+    </main>
+    <script>
+      var userInput = document.getElementById("userInput");
+      var addBtn = document.getElementById("add_btn");
+      var list = document.getElementById("parentlist");
+
+      function emptyMessage() {
+        var newMsg = document.createElement("h3");
+        newMsg.id = "emptymsg";
+        newMsg.textContent =
+          "!! OOPS THIS IS EMPTY. PLEASE ADD YOUR FAVOURATE CHAPTER";
+        parentlist.appendChild(newMsg);
+      }
+
+      function clearMessage() {
+        document.getElementById("emptymsg").remove();
+      }
+
+      addBtn.addEventListener("click", function fun() {
+        var currentInput = userInput.value;
+        var newLi = document.createElement("li");
+
+        newLi.appendChild(document.createTextNode(currentInput));
+        list.appendChild(newLi);
+        newLi.className = "list-group-item d-flex justify-content-between";
+        newLi.innerHTML = `<h3 class="flex-grow-1">${currentInput}</h3>
+        <button class="btn btn-warning mx-5" onclick="editChapter(this)">
+          EDIT
+        </button>
+
+        <button class="btn btn-danger" onclick="removeChapter(this)">
+          REMOVE
+        </button>`;
+
+        userInput.value = "";
+
+        if (document.getElementById("emptymsg")) {
+          clearMessage();
+        }
+      });
+
+      function removeChapter(currElement) {
+        currElement.parentElement.remove();
+        var list = document.getElementById("parentlist");
+        if (parentlist.children.length <= 0) {
+          emptyMessage();
+        }
+      }
+
+      function editChapter(currElement) {
+        if (currElement.textContent == "DONE") {
+          currElement.textContent = "EDIT";
+
+          var currentValue = currElement.previousElementSibling.value;
+          var currHeading = document.createElement("h3");
+          currHeading.className = "flex-grow-1";
+          currHeading.textContent = currentValue;
+          currElement.parentElement.replaceChild(
+            currHeading,
+            currElement.previousElementSibling
+          );
+        } else {
+          currElement.textContent = "DONE";
+          var currentValue = currElement.previousElementSibling.textContent;
+          var currInput = document.createElement("input");
+          currInput.type = "text";
+          currInput.placeholder = "CHAPTER NAME";
+          currInput.className = "form-control";
+          currInput.value = currentValue;
+          currElement.parentElement.replaceChild(
+            currInput,
+            currElement.previousElementSibling
+          );
+        }
+      }
+    </script>
+  </body>
+</html>
